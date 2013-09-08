@@ -16,6 +16,8 @@
 
 @implementation DetailViewController
 
+@synthesize cdPromoID;
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -34,7 +36,27 @@
     CGSize scrollableSizeMenu = CGSizeMake(self.myScroll.frame.size.width, self.myScroll.frame.size.height + 500);
     [self.myScroll setContentSize:scrollableSizeMenu];
     
+    
+    
+    
+    
+    
+    //Left
+    UISwipeGestureRecognizer *oneFingerSwipeUp =
+    [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(oneFingerSwipeLeft:)];
+    [oneFingerSwipeUp setDirection:UISwipeGestureRecognizerDirectionRight];
+    [[self view] addGestureRecognizer:oneFingerSwipeUp];
+    
 }
+
+
+
+- (void)oneFingerSwipeLeft:(UISwipeGestureRecognizer *)recognizer
+{
+    
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
 
 - (void)didReceiveMemoryWarning
 {
@@ -50,6 +72,9 @@
 - (void)viewDidUnload {
     [self setMyTableContent:nil];
     [self setMyScroll:nil];
+    [self setVw_panel_notif:nil];
+    [self setLbl_title:nil];
+    [self setLbl_content:nil];
     [super viewDidUnload];
 }
 
@@ -77,6 +102,50 @@
     
     // Disable the idle timer
     [[UIApplication sharedApplication] setIdleTimerDisabled: YES];
+    
+    
+    myTimer = [NSTimer scheduledTimerWithTimeInterval:15 target:self selector:@selector(action_open_notif) userInfo:nil repeats:YES];
+    
+    
+    
+    
+    //From
+    self.vw_panel_notif.frame = CGRectMake(0, -100, self.vw_panel_notif.frame.size.width, self.vw_panel_notif.frame.size.height);
+    
+    
+    
+    
+    if ([cdPromoID isEqualToString:@"0"]) {
+        self.lbl_title.text = @"50% Discount on Sandwich Meals.";
+        self.lbl_content.text = @"Pickle & Fig";
+    }else if ([cdPromoID isEqualToString:@"1"]) {
+        self.lbl_title.text = @"30% Discount on Latte Drinks.";
+        self.lbl_content.text = @"Coffee Sociate";
+    }else if ([cdPromoID isEqualToString:@"2"]) {
+        self.lbl_title.text = @"FREE Hot Latte when you purchase a slice of cake.";
+        self.lbl_content.text = @"Espresso Lab";
+    }else if ([cdPromoID isEqualToString:@"3"]) {
+        self.lbl_title.text = @"20% Discount on Swimwear.";
+        self.lbl_content.text = @"Sports World";
+    }else if ([cdPromoID isEqualToString:@"4"]) {
+        self.lbl_title.text = @"40% Storewide Discount.";
+        self.lbl_content.text = @"Mango";
+    }else if ([cdPromoID isEqualToString:@"5"]) {
+        self.lbl_title.text = @"20% Discount Women Apparels";
+        self.lbl_content.text = @"Marks & Spencer";
+    }else if ([cdPromoID isEqualToString:@"6"]) {
+        self.lbl_title.text = @"30% Discount on House Burgers";
+        self.lbl_content.text = @"Burger Lab";
+    }else if ([cdPromoID isEqualToString:@"7"]) {
+        self.lbl_title.text = @"FREE Spaghetti when you spend over Rm30.";
+        self.lbl_content.text = @"Delicious";
+    }else if ([cdPromoID isEqualToString:@"8"]) {
+        self.lbl_title.text = @"50% Discount on Chef Nasi Lemak";
+        self.lbl_content.text = @"Nasi Lemak Antarabangsa";
+    }else{
+        self.lbl_title.text = @"50% Discount on Sandwich Meals.";
+        self.lbl_content.text = @"Pickle & Fig";
+    }
     
 }
 
@@ -108,7 +177,20 @@
     
     
     UILabel *titleLabelV1 = (UILabel *)[cell viewWithTag:1001];
-    titleLabelV1.text = [NSString stringWithFormat:@"Comment %d", indexPath.row];
+    
+    if (indexPath.row == 0) {
+        titleLabelV1.text = @"The Sandwiches is delicious";
+    }else if (indexPath.row == 1) {
+        titleLabelV1.text = @"Worth trying";
+    }else if (indexPath.row == 2) {
+        titleLabelV1.text = @"i luv their coffee art";
+    }else if (indexPath.row == 2) {
+        titleLabelV1.text = @"wish i could rush over for the promotion on time";
+    }else{
+        titleLabelV1.text = [NSString stringWithFormat:@"Comment %d", indexPath.row];
+    }
+    
+    
     
     
     
@@ -172,9 +254,6 @@
      */
     
     
-    DetailViewController *rvController = [self.storyboard instantiateViewControllerWithIdentifier:@"DetailView"];
-    [self.navigationController pushViewController:rvController animated:YES];
-    
     
 }
 
@@ -186,7 +265,78 @@
 }
 
 
+- (void)action_stopTimer{
+    
+    [myTimer invalidate];
+    myTimer = nil;
+}
 
+- (void)action_stopTimer_close{
+    
+    [myTimerClose invalidate];
+    myTimerClose = nil;
+}
+
+
+
+- (void)viewWillDisappear:(BOOL)animated {
+	
+	[super viewWillDisappear:animated];
+    
+    [self action_stopTimer];
+    
+    [self action_stopTimer_close];
+}
+
+-(void)action_open_notif {
+    
+    //From
+    self.vw_panel_notif.frame = CGRectMake(0, -100, self.vw_panel_notif.frame.size.width, self.vw_panel_notif.frame.size.height);
+    
+    
+    //To
+    [UIView animateWithDuration:0.5 delay:0.0 options:UIViewAnimationOptionCurveEaseOut
+                     animations:^{
+                         self.vw_panel_notif.frame = CGRectMake(0, 0, self.vw_panel_notif.frame.size.width, self.vw_panel_notif.frame.size.height);
+                     }
+                     completion:nil];
+    
+    
+    
+    [self action_stopTimer];
+    myTimerClose = [NSTimer scheduledTimerWithTimeInterval:10 target:self selector:@selector(action_close_notif) userInfo:nil repeats:YES];
+    
+    
+}
+
+
+
+-(void)action_close_notif {
+    
+    //From
+    self.vw_panel_notif.frame = CGRectMake(0, 0, self.vw_panel_notif.frame.size.width, self.vw_panel_notif.frame.size.height);
+    
+    
+    //To
+    [UIView animateWithDuration:0.5 delay:0.0 options:UIViewAnimationOptionCurveEaseOut
+                     animations:^{
+                         self.vw_panel_notif.frame = CGRectMake(0, -100, self.vw_panel_notif.frame.size.width, self.vw_panel_notif.frame.size.height);
+                     }
+                     completion:nil];
+    
+    
+    [self action_stopTimer_close];
+    myTimer = [NSTimer scheduledTimerWithTimeInterval:15 target:self selector:@selector(action_open_notif) userInfo:nil repeats:YES];
+    
+    
+}
+
+- (IBAction)action_endKeyboard:(id)sender {
+    [sender resignFirstResponder];
+}
+
+- (IBAction)action_search:(id)sender {
+}
 
 
 @end

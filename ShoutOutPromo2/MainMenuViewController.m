@@ -80,6 +80,9 @@
 @synthesize _nearSpot;
 
 
+@synthesize cdCurCategory;
+
+
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -149,6 +152,13 @@
     [btn_goSubmit setBackgroundImage:stretchabledarkGreenButton forState:UIControlStateHighlighted];
     
 }
+
+- (void)oneFingerSwipeLeft:(UISwipeGestureRecognizer *)recognizer
+{
+    
+    //[self.navigationController popViewControllerAnimated:YES];
+}
+
 
 - (void)didReceiveMemoryWarning
 {
@@ -255,6 +265,8 @@
     
     
     
+    self.vw_panel_menu.frame = CGRectMake(0, 460, self.vw_panel_menu.frame.size.width, self.vw_panel_menu.frame.size.height);
+    
     
     
     
@@ -322,7 +334,17 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    return 30;
+    
+    if ([cdCurCategory isEqualToString:@"8"]) {
+        return 3;
+    }else if ([cdCurCategory isEqualToString:@"1"]) {
+        return 3;
+    }else if ([cdCurCategory isEqualToString:@"2"]) {
+        return 3;
+    }else{
+        return 9;
+    }
+    
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -335,12 +357,19 @@
     
     //cell.textLabel.text = @"Promotion 100";
     UILabel *titleLabelV1 = (UILabel *)[cell viewWithTag:1001];
+    UILabel *titleLabelV2 = (UILabel *)[cell viewWithTag:1002];
     titleLabelV1.text = [NSString stringWithFormat:@"Promotion %d", indexPath.row];
     
     
     
     UIImageView *titleLabel_new = (UIImageView *)[cell viewWithTag:200];
     
+    
+    
+    UIImageView *img_1 = (UIImageView *)[cell viewWithTag:300];
+    UIImageView *img_2 = (UIImageView *)[cell viewWithTag:301];
+    
+    /*
     if (indexPath.row %2 == 0) {
         titleLabel_new.image = [UIImage imageNamed:@"promo1.png"];
         
@@ -353,9 +382,451 @@
         
         NSLog(@"promo1.png");
     }
+    */
+    
+    /*
+    if ([cdCurCategory isEqualToString:@"1"]) {
+        if (indexPath.row %2 == 0) {
+            titleLabel_new.image = [UIImage imageNamed:@"promo1.png"];
+            img_1.image = [UIImage imageNamed:@"round2dark.png"];
+            img_2.image = [UIImage imageNamed:@"resaurant_1.png"];
+        }else{
+            titleLabel_new.image = [UIImage imageNamed:@"promo1_o.png"];
+            img_1.image = [UIImage imageNamed:@"round2dark.png"];
+            img_2.image = [UIImage imageNamed:@"promo1.png"];
+        }
+    }else if ([cdCurCategory isEqualToString:@"2"]) {
+        if (indexPath.row %2 == 0) {
+            titleLabel_new.image = [UIImage imageNamed:@"promo2.png"];
+            img_1.image = [UIImage imageNamed:@"round2dark.png"];
+            img_2.image = [UIImage imageNamed:@"promo1.png"];
+        }else{
+            titleLabel_new.image = [UIImage imageNamed:@"promo2_o.png"];
+            img_1.image = [UIImage imageNamed:@"round2dark.png"];
+            img_2.image = [UIImage imageNamed:@"promo1.png"];
+        }
+    }else if ([cdCurCategory isEqualToString:@"3"]) {
+        if (indexPath.row %2 == 0) {
+            titleLabel_new.image = [UIImage imageNamed:@"promo3.png"];
+            img_1.image = [UIImage imageNamed:@"round2dark.png"];
+            img_2.image = [UIImage imageNamed:@"promo1.png"];
+        }else{
+            titleLabel_new.image = [UIImage imageNamed:@"promo3_o.png"];
+            img_1.image = [UIImage imageNamed:@"round2dark.png"];
+            img_2.image = [UIImage imageNamed:@"promo1.png"];
+        }
+    }else if ([cdCurCategory isEqualToString:@"4"]) {
+        if (indexPath.row %2 == 0) {
+            titleLabel_new.image = [UIImage imageNamed:@"promo3.png"];
+            img_1.image = [UIImage imageNamed:@"round2dark.png"];
+            img_2.image = [UIImage imageNamed:@"promo1.png"];
+        }else{
+            titleLabel_new.image = [UIImage imageNamed:@"promo3_o.png"];
+            img_1.image = [UIImage imageNamed:@"round2dark.png"];
+            img_2.image = [UIImage imageNamed:@"promo1.png"];
+        }
+    }else if ([cdCurCategory isEqualToString:@"5"]) {
+        if (indexPath.row %2 == 0) {
+            titleLabel_new.image = [UIImage imageNamed:@"promo3.png"];
+            img_1.image = [UIImage imageNamed:@"round2dark.png"];
+            img_2.image = [UIImage imageNamed:@"promo1.png"];
+        }else{
+            titleLabel_new.image = [UIImage imageNamed:@"promo3_o.png"];
+            img_1.image = [UIImage imageNamed:@"round2dark.png"];
+            img_2.image = [UIImage imageNamed:@"promo1.png"];
+        }
+    }else if ([cdCurCategory isEqualToString:@"6"]) {
+        if (indexPath.row %2 == 0) {
+            titleLabel_new.image = [UIImage imageNamed:@"promo3.png"];
+            img_1.image = [UIImage imageNamed:@"round2dark.png"];
+            img_2.image = [UIImage imageNamed:@"promo1.png"];
+        }else{
+            titleLabel_new.image = [UIImage imageNamed:@"promo3_o.png"];
+            img_1.image = [UIImage imageNamed:@"round2dark.png"];
+            img_2.image = [UIImage imageNamed:@"promo1.png"];
+        }
+    }else if ([cdCurCategory isEqualToString:@"7"]) {
+        if (indexPath.row %2 == 0) {
+            titleLabel_new.image = [UIImage imageNamed:@"promo3.png"];
+            img_1.image = [UIImage imageNamed:@"round2dark.png"];
+            img_2.image = [UIImage imageNamed:@"promo1.png"];
+        }else{
+            titleLabel_new.image = [UIImage imageNamed:@"promo3_o.png"];
+            img_1.image = [UIImage imageNamed:@"round2dark.png"];
+            img_2.image = [UIImage imageNamed:@"promo1.png"];
+        }
+    }else if ([cdCurCategory isEqualToString:@"8"]) {
+        if (indexPath.row %2 == 0) {
+            titleLabel_new.image = [UIImage imageNamed:@"promo3.png"];
+            img_1.image = [UIImage imageNamed:@"round2dark.png"];
+            img_2.image = [UIImage imageNamed:@"promo1.png"];
+        }else{
+            titleLabel_new.image = [UIImage imageNamed:@"promo3_o.png"];
+            img_1.image = [UIImage imageNamed:@"round2dark.png"];
+            img_2.image = [UIImage imageNamed:@"promo1.png"];
+        }
+    }else if ([cdCurCategory isEqualToString:@"all"]) {
+        if (indexPath.row %2 == 0) {
+            titleLabel_new.image = [UIImage imageNamed:@"promo1.png"];
+            img_1.image = [UIImage imageNamed:@"round2dark.png"];
+            img_2.image = [UIImage imageNamed:@"promo1.png"];
+        }else if (indexPath.row %3 == 0) {
+            titleLabel_new.image = [UIImage imageNamed:@"promo2.png"];
+            img_1.image = [UIImage imageNamed:@"round2dark.png"];
+            img_2.image = [UIImage imageNamed:@"promo1.png"];
+        }else{
+            titleLabel_new.image = [UIImage imageNamed:@"promo3.png"];
+            img_1.image = [UIImage imageNamed:@"round2dark.png"];
+            img_2.image = [UIImage imageNamed:@"promo1.png"];
+        }
+    }else{
+        if (indexPath.row %2 == 0) {
+            titleLabel_new.image = [UIImage imageNamed:@"promo1.png"];
+            img_1.image = [UIImage imageNamed:@"round2dark.png"];
+            img_2.image = [UIImage imageNamed:@"promo1.png"];
+        }else if (indexPath.row %3 == 0) {
+            titleLabel_new.image = [UIImage imageNamed:@"promo2.png"];
+            img_1.image = [UIImage imageNamed:@"round2dark.png"];
+            img_2.image = [UIImage imageNamed:@"promo1.png"];
+        }else{
+            titleLabel_new.image = [UIImage imageNamed:@"promo3.png"];
+            img_1.image = [UIImage imageNamed:@"round2dark.png"];
+            img_2.image = [UIImage imageNamed:@"promo1.png"];
+        }
+    }
+    */
     
     
+    /*
+    if (indexPath.row == 1) {
+        titleLabel_new.image = [UIImage imageNamed:@"promo1.png"];
+        img_1.image = [UIImage imageNamed:@"round2dark.png"];
+        img_2.image = [UIImage imageNamed:@"resaurant_1.png"];
+    }else if (indexPath.row == 2) {
+        titleLabel_new.image = [UIImage imageNamed:@"promo1_o.png"];
+        img_1.image = [UIImage imageNamed:@"roundadd2.png"];
+        img_2.image = [UIImage imageNamed:@"resaurant_2.png"];
+    }else if (indexPath.row == 3) {
+        titleLabel_new.image = [UIImage imageNamed:@"promo2.png"];
+        img_1.image = [UIImage imageNamed:@"round3dark.png"];
+        img_2.image = [UIImage imageNamed:@"fashion_1.png"];
+    }else if (indexPath.row == 4) {
+        titleLabel_new.image = [UIImage imageNamed:@"promo2_o.png"];
+        img_1.image = [UIImage imageNamed:@"roundadd3.png"];
+        img_2.image = [UIImage imageNamed:@"fashion_2.png"];
+    }else if (indexPath.row == 5) {
+        titleLabel_new.image = [UIImage imageNamed:@"promo3.png"];
+        img_1.image = [UIImage imageNamed:@"round1dark.png"];
+        img_2.image = [UIImage imageNamed:@"cafe_3.png"];
+    }else if (indexPath.row == 6) {
+        titleLabel_new.image = [UIImage imageNamed:@"promo3_o.png"];
+        img_1.image = [UIImage imageNamed:@"roundadd1.png"];
+        img_2.image = [UIImage imageNamed:@"cafe_2.png"];
+    }else if (indexPath.row == 7) {
+        titleLabel_new.image = [UIImage imageNamed:@"promo1.png"];
+        img_1.image = [UIImage imageNamed:@"round2dark.png"];
+        img_2.image = [UIImage imageNamed:@"resaurant_1.png"];
+    }else if (indexPath.row == 8) {
+        titleLabel_new.image = [UIImage imageNamed:@"promo1.png"];
+        img_1.image = [UIImage imageNamed:@"round2dark.png"];
+        img_2.image = [UIImage imageNamed:@"resaurant_1.png"];
+    }else{
+        titleLabel_new.image = [UIImage imageNamed:@"promo3.png"];
+        img_1.image = [UIImage imageNamed:@"round1dark.png"];
+        img_2.image = [UIImage imageNamed:@"cafe_pickle.png"];
+        
+    }
+    */
     
+    //NSString * cdPromoID = @"0";
+    cdPromoID = @"0";
+    
+    if ([cdCurCategory isEqualToString:@"1"]) {
+        if (indexPath.row == 0) {
+            titleLabel_new.image = [UIImage imageNamed:@"promo1.png"];
+            img_1.image = [UIImage imageNamed:@"round2dark.png"];
+            img_2.image = [UIImage imageNamed:@"resaurant_1.png"];
+            
+            cdPromoID = @"3";
+            
+        }else if (indexPath.row == 1) {
+            titleLabel_new.image = [UIImage imageNamed:@"promo1_o.png"];
+            img_1.image = [UIImage imageNamed:@"roundadd2.png"];
+            img_2.image = [UIImage imageNamed:@"resaurant_2.png"];
+            
+            cdPromoID = @"4";
+        }else if (indexPath.row == 2) {
+            titleLabel_new.image = [UIImage imageNamed:@"promo1.png"];
+            img_1.image = [UIImage imageNamed:@"round2dark.png"];
+            img_2.image = [UIImage imageNamed:@"resaurant_3.png"];
+            
+            cdPromoID = @"5";
+        }
+    }else if ([cdCurCategory isEqualToString:@"2"]) {
+        if (indexPath.row == 0) {
+            titleLabel_new.image = [UIImage imageNamed:@"promo2.png"];
+            img_1.image = [UIImage imageNamed:@"round3dark.png"];
+            img_2.image = [UIImage imageNamed:@"fashion_1.png"];
+            
+            cdPromoID = @"6";
+        }else if (indexPath.row == 1) {
+            titleLabel_new.image = [UIImage imageNamed:@"promo2_o.png"];
+            img_1.image = [UIImage imageNamed:@"roundadd3.png"];
+            img_2.image = [UIImage imageNamed:@"fashion_2.png"];
+            
+            cdPromoID = @"7";
+            
+        }else if (indexPath.row == 2) {
+            titleLabel_new.image = [UIImage imageNamed:@"promo2.png"];
+            img_1.image = [UIImage imageNamed:@"round3dark.png"];
+            img_2.image = [UIImage imageNamed:@"fashion_3.png"];
+            
+            cdPromoID = @"8";
+        }
+    }else if ([cdCurCategory isEqualToString:@"3"]) {
+        if (indexPath.row == 1) {
+            titleLabel_new.image = [UIImage imageNamed:@"promo1.png"];
+            img_1.image = [UIImage imageNamed:@"round2dark.png"];
+            img_2.image = [UIImage imageNamed:@"resaurant_1.png"];
+        }else if (indexPath.row == 2) {
+            titleLabel_new.image = [UIImage imageNamed:@"promo1_o.png"];
+            img_1.image = [UIImage imageNamed:@"roundadd2.png"];
+            img_2.image = [UIImage imageNamed:@"resaurant_2.png"];
+        }else if (indexPath.row == 3) {
+            titleLabel_new.image = [UIImage imageNamed:@"promo2.png"];
+            img_1.image = [UIImage imageNamed:@"round3dark.png"];
+            img_2.image = [UIImage imageNamed:@"fashion_1.png"];
+        }
+    }else if ([cdCurCategory isEqualToString:@"4"]) {
+        if (indexPath.row == 1) {
+            titleLabel_new.image = [UIImage imageNamed:@"promo1.png"];
+            img_1.image = [UIImage imageNamed:@"round2dark.png"];
+            img_2.image = [UIImage imageNamed:@"resaurant_1.png"];
+        }else if (indexPath.row == 2) {
+            titleLabel_new.image = [UIImage imageNamed:@"promo1_o.png"];
+            img_1.image = [UIImage imageNamed:@"roundadd2.png"];
+            img_2.image = [UIImage imageNamed:@"resaurant_2.png"];
+        }else if (indexPath.row == 3) {
+            titleLabel_new.image = [UIImage imageNamed:@"promo2.png"];
+            img_1.image = [UIImage imageNamed:@"round3dark.png"];
+            img_2.image = [UIImage imageNamed:@"fashion_1.png"];
+        }
+    }else if ([cdCurCategory isEqualToString:@"5"]) {
+        if (indexPath.row == 1) {
+            titleLabel_new.image = [UIImage imageNamed:@"promo1.png"];
+            img_1.image = [UIImage imageNamed:@"round2dark.png"];
+            img_2.image = [UIImage imageNamed:@"resaurant_1.png"];
+        }else if (indexPath.row == 2) {
+            titleLabel_new.image = [UIImage imageNamed:@"promo1_o.png"];
+            img_1.image = [UIImage imageNamed:@"roundadd2.png"];
+            img_2.image = [UIImage imageNamed:@"resaurant_2.png"];
+        }else if (indexPath.row == 3) {
+            titleLabel_new.image = [UIImage imageNamed:@"promo2.png"];
+            img_1.image = [UIImage imageNamed:@"round3dark.png"];
+            img_2.image = [UIImage imageNamed:@"fashion_1.png"];
+        }
+    }else if ([cdCurCategory isEqualToString:@"6"]) {
+        if (indexPath.row == 1) {
+            titleLabel_new.image = [UIImage imageNamed:@"promo1.png"];
+            img_1.image = [UIImage imageNamed:@"round2dark.png"];
+            img_2.image = [UIImage imageNamed:@"resaurant_1.png"];
+        }else if (indexPath.row == 2) {
+            titleLabel_new.image = [UIImage imageNamed:@"promo1_o.png"];
+            img_1.image = [UIImage imageNamed:@"roundadd2.png"];
+            img_2.image = [UIImage imageNamed:@"resaurant_2.png"];
+        }else if (indexPath.row == 3) {
+            titleLabel_new.image = [UIImage imageNamed:@"promo2.png"];
+            img_1.image = [UIImage imageNamed:@"round3dark.png"];
+            img_2.image = [UIImage imageNamed:@"fashion_1.png"];
+        }
+    }else if ([cdCurCategory isEqualToString:@"7"]) {
+        if (indexPath.row == 1) {
+            titleLabel_new.image = [UIImage imageNamed:@"promo1.png"];
+            img_1.image = [UIImage imageNamed:@"round2dark.png"];
+            img_2.image = [UIImage imageNamed:@"resaurant_1.png"];
+        }else if (indexPath.row == 2) {
+            titleLabel_new.image = [UIImage imageNamed:@"promo1_o.png"];
+            img_1.image = [UIImage imageNamed:@"roundadd2.png"];
+            img_2.image = [UIImage imageNamed:@"resaurant_2.png"];
+        }else if (indexPath.row == 3) {
+            titleLabel_new.image = [UIImage imageNamed:@"promo2.png"];
+            img_1.image = [UIImage imageNamed:@"round3dark.png"];
+            img_2.image = [UIImage imageNamed:@"fashion_1.png"];
+        }
+    }else if ([cdCurCategory isEqualToString:@"8"]) {
+        if (indexPath.row == 0) {
+            titleLabel_new.image = [UIImage imageNamed:@"promo3.png"];
+            img_1.image = [UIImage imageNamed:@"round1dark.png"];
+            img_2.image = [UIImage imageNamed:@"cafe_pickle.png"];
+            
+            cdPromoID = @"0";
+        }else if (indexPath.row == 1) {
+            titleLabel_new.image = [UIImage imageNamed:@"promo3_o.png"];
+            img_1.image = [UIImage imageNamed:@"roundadd1.png"];
+            img_2.image = [UIImage imageNamed:@"cafe_2.png"];
+            
+            cdPromoID = @"1";
+        }else if (indexPath.row == 2) {
+            titleLabel_new.image = [UIImage imageNamed:@"promo3.png"];
+            img_1.image = [UIImage imageNamed:@"round1dark.png"];
+            img_2.image = [UIImage imageNamed:@"cafe_3.png"];
+            
+            cdPromoID = @"2";
+        }
+    }else{
+        if (indexPath.row == 0) {
+            titleLabel_new.image = [UIImage imageNamed:@"promo3.png"];
+            img_1.image = [UIImage imageNamed:@"round1dark.png"];
+            img_2.image = [UIImage imageNamed:@"cafe_pickle.png"];
+            
+            cdPromoID = @"0";
+            
+        }else if (indexPath.row == 1) {
+            titleLabel_new.image = [UIImage imageNamed:@"promo1_o.png"];
+            img_1.image = [UIImage imageNamed:@"roundadd2.png"];
+            img_2.image = [UIImage imageNamed:@"resaurant_2.png"];
+            
+             cdPromoID = @"4";
+            
+        }else if (indexPath.row == 2) {
+            titleLabel_new.image = [UIImage imageNamed:@"promo2.png"];
+            img_1.image = [UIImage imageNamed:@"round3dark.png"];
+            img_2.image = [UIImage imageNamed:@"fashion_1.png"];
+            
+            cdPromoID = @"6";
+            
+        }else if (indexPath.row == 3) {
+            titleLabel_new.image = [UIImage imageNamed:@"promo3_o.png"];
+            img_1.image = [UIImage imageNamed:@"roundadd1.png"];
+            img_2.image = [UIImage imageNamed:@"cafe_2.png"];
+            
+             cdPromoID = @"1";
+            
+        }else if (indexPath.row == 4) {
+            titleLabel_new.image = [UIImage imageNamed:@"promo1.png"];
+            img_1.image = [UIImage imageNamed:@"round2dark.png"];
+            img_2.image = [UIImage imageNamed:@"resaurant_1.png"];
+            
+            cdPromoID = @"3";
+            
+        }else if (indexPath.row == 5) {
+            titleLabel_new.image = [UIImage imageNamed:@"promo1_o.png"];
+            img_1.image = [UIImage imageNamed:@"roundadd2.png"];
+            img_2.image = [UIImage imageNamed:@"resaurant_3.png"];
+            
+            cdPromoID = @"5";
+            
+        }else if (indexPath.row == 6) {
+            titleLabel_new.image = [UIImage imageNamed:@"promo3.png"];
+            img_1.image = [UIImage imageNamed:@"round1dark.png"];
+            img_2.image = [UIImage imageNamed:@"cafe_3.png"];
+            
+            cdPromoID = @"2";
+            
+        }else if (indexPath.row == 7) {
+            titleLabel_new.image = [UIImage imageNamed:@"promo2_o.png"];
+            img_1.image = [UIImage imageNamed:@"roundadd3.png"];
+            img_2.image = [UIImage imageNamed:@"fashion_2.png"];
+            
+            cdPromoID = @"7";
+            
+        }else if (indexPath.row == 8) {
+            titleLabel_new.image = [UIImage imageNamed:@"promo2.png"];
+            img_1.image = [UIImage imageNamed:@"round3dark.png"];
+            img_2.image = [UIImage imageNamed:@"fashion_3.png"];
+            
+            cdPromoID = @"8";
+            
+        }else{
+            titleLabel_new.image = [UIImage imageNamed:@"promo3.png"];
+            img_1.image = [UIImage imageNamed:@"round1dark.png"];
+            img_2.image = [UIImage imageNamed:@"cafe_pickle.png"];
+            
+            cdPromoID = @"0";
+            
+        }
+    }
+    
+    UIButton *btn_1 = (UIButton *)[cell viewWithTag:24001];
+    
+    ///////////
+    if ([cdPromoID isEqualToString:@"0"]) {
+        titleLabelV1.text = @"50% Discount on Sandwich Meals.";
+        titleLabelV2.text = @"Pickle & Fig";
+        
+        cdPromoID = @"0";
+        
+        [btn_1 setTitle:[NSString stringWithFormat:@"%@",cdPromoID] forState:UIControlStateDisabled];
+        
+    }else if ([cdPromoID isEqualToString:@"1"]) {
+        titleLabelV1.text = @"30% Discount on Latte Drinks.";
+        titleLabelV2.text = @"Coffee Sociate";
+        
+        cdPromoID = @"1";
+        
+        [btn_1 setTitle:[NSString stringWithFormat:@"%@",cdPromoID] forState:UIControlStateDisabled];
+        
+    }else if ([cdPromoID isEqualToString:@"2"]) {
+        titleLabelV1.text = @"FREE Hot Latte when you purchase a slice of cake.";
+        titleLabelV2.text = @"Espresso Lab";
+        
+        cdPromoID = @"2";
+        
+        [btn_1 setTitle:[NSString stringWithFormat:@"%@",cdPromoID] forState:UIControlStateDisabled];
+        
+    }else if ([cdPromoID isEqualToString:@"3"]) {
+        titleLabelV1.text = @"20% Discount on Swimwear.";
+        titleLabelV2.text = @"Sports World";
+        
+        cdPromoID = @"3";
+        
+        [btn_1 setTitle:[NSString stringWithFormat:@"%@",cdPromoID] forState:UIControlStateDisabled];
+        
+    }else if ([cdPromoID isEqualToString:@"4"]) {
+        titleLabelV1.text = @"40% Storewide Discount.";
+        titleLabelV2.text = @"Mango";
+        
+        cdPromoID = @"4";
+        
+        [btn_1 setTitle:[NSString stringWithFormat:@"%@",cdPromoID] forState:UIControlStateDisabled];
+        
+    }else if ([cdPromoID isEqualToString:@"5"]) {
+        titleLabelV1.text = @"20% Discount Women Apparels";
+        titleLabelV2.text = @"Marks & Spencer";
+        
+        cdPromoID = @"5";
+        
+        [btn_1 setTitle:[NSString stringWithFormat:@"%@",cdPromoID] forState:UIControlStateDisabled];
+        
+    }else if ([cdPromoID isEqualToString:@"6"]) {
+        titleLabelV1.text = @"30% Discount on House Burgers";
+        titleLabelV2.text = @"Burger Lab";
+        
+        cdPromoID = @"6";
+        
+        [btn_1 setTitle:[NSString stringWithFormat:@"%@",cdPromoID] forState:UIControlStateDisabled];
+    }else if ([cdPromoID isEqualToString:@"7"]) {
+        titleLabelV1.text = @"FREE Spaghetti when you spend over Rm30.";
+        titleLabelV2.text = @"Delicious";
+        
+        cdPromoID = @"7";
+        
+        [btn_1 setTitle:[NSString stringWithFormat:@"%@",cdPromoID] forState:UIControlStateDisabled];
+    }else if ([cdPromoID isEqualToString:@"8"]) {
+        titleLabelV1.text = @"50% Discount on Chef Nasi Lemak";
+        titleLabelV2.text = @"Nasi Lemak Antarabangsa";
+        
+        cdPromoID = @"8";
+        
+        [btn_1 setTitle:[NSString stringWithFormat:@"%@",cdPromoID] forState:UIControlStateDisabled];
+    }else{
+        titleLabelV1.text = @"50% Discount on Sandwich Meals.";
+        titleLabelV2.text = @"Pickle & Fig";
+        
+        cdPromoID = @"1";
+        
+        [btn_1 setTitle:[NSString stringWithFormat:@"%@",cdPromoID] forState:UIControlStateDisabled];
+    }
     
     
     return cell;
@@ -418,8 +889,15 @@
      */
     
     
+    /*
+    NSLog(@"cdPromoID >>> %@", cdPromoID);
+    
     DetailViewController *rvController = [self.storyboard instantiateViewControllerWithIdentifier:@"DetailView"];
+    rvController.cdPromoID = [NSString stringWithFormat:@"%@", cdPromoID];
     [self.navigationController pushViewController:rvController animated:YES];
+    */
+    
+    
     
     
 }
@@ -1135,6 +1613,7 @@ didUpdateUserLocation:
     
     
     DetailViewController *rvController = [self.storyboard instantiateViewControllerWithIdentifier:@"DetailView"];
+    rvController.cdPromoID = [NSString stringWithFormat:@"%d", myLoc.cdDataArrayIndex];
     [self.navigationController pushViewController:rvController animated:YES];
     
 }
@@ -1263,8 +1742,38 @@ didUpdateUserLocation:
             
             NSNumber * latitude = [[dataArray objectAtIndex: i] objectForKey:@"location_lat"];
             NSNumber * longitude = [[dataArray objectAtIndex: i] objectForKey:@"location_long"];
-            NSString * crimeDescription = [NSString stringWithFormat:@"%@", [self removeTag:[[dataArray objectAtIndex: i] objectForKey:@"centre_name"]]];
+            //NSString * crimeDescription = [NSString stringWithFormat:@"%@", [self removeTag:[[dataArray objectAtIndex: i] objectForKey:@"centre_name"]]];
             NSString * address = [self removeTag:[[dataArray objectAtIndex: i] objectForKey:@"location_name"]];
+            
+            NSString * cdPromoID2 = [NSString stringWithFormat:@"%d", i];
+            NSString * cdPromoTitle = @"50% Discount on Sandwich Meals.";
+            if ([cdPromoID2 isEqualToString:@"0"]) {
+                cdPromoTitle =  @"50% Discount on Sandwich Meals.";
+            }else if ([cdPromoID2 isEqualToString:@"1"]) {
+                cdPromoTitle = @"30% Discount on Latte Drinks.";
+            }else if ([cdPromoID2 isEqualToString:@"2"]) {
+                cdPromoTitle = @"FREE Hot Latte when you purchase a slice of cake.";
+            }else if ([cdPromoID2 isEqualToString:@"3"]) {
+                cdPromoTitle = @"20% Discount on Swimwear.";
+            }else if ([cdPromoID2 isEqualToString:@"4"]) {
+                cdPromoTitle = @"40% Storewide Discount.";
+            }else if ([cdPromoID2 isEqualToString:@"5"]) {
+                cdPromoTitle = @"20% Discount Women Apparels";
+            }else if ([cdPromoID2 isEqualToString:@"6"]) {
+                cdPromoTitle = @"30% Discount on House Burgers";
+            }else if ([cdPromoID2 isEqualToString:@"7"]) {
+                cdPromoTitle = @"FREE Spaghetti when you spend over Rm30.";
+            }else if ([cdPromoID2 isEqualToString:@"8"]) {
+                cdPromoTitle = @"50% Discount on Chef Nasi Lemak";
+            }else{
+                cdPromoTitle = @"50% Discount on Sandwich Meals.";
+            }
+            
+            
+            NSString * crimeDescription = [NSString stringWithFormat:@"%@", cdPromoTitle];
+            
+            
+            
             
             NSUInteger cdDataArrayIndex = i;
             
@@ -1332,7 +1841,27 @@ didUpdateUserLocation:
         annotationView.canShowCallout = YES;
         annotationView.rightCalloutAccessoryView = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
         
-        annotationView.image=[UIImage imageNamed:@"pin-32x39.png"];//here we use a nice image instead of the default pins
+        if ([cdCurCategory isEqualToString:@"1"]) {
+            annotationView.image=[UIImage imageNamed:@"map1-32x39.png"];//here we use a nice image instead of the default pins
+        }else if ([cdCurCategory isEqualToString:@"2"]) {
+            annotationView.image=[UIImage imageNamed:@"map2-32x39.png"];//here we use a nice image instead of the default pins
+        }else if ([cdCurCategory isEqualToString:@"3"]) {
+            annotationView.image=[UIImage imageNamed:@"map3-32x39.png"];//here we use a nice image instead of the default pins
+        }else if ([cdCurCategory isEqualToString:@"4"]) {
+            annotationView.image=[UIImage imageNamed:@"map4-32x39.png"];//here we use a nice image instead of the default pins
+        }else if ([cdCurCategory isEqualToString:@"5"]) {
+            annotationView.image=[UIImage imageNamed:@"map5-32x39.png"];//here we use a nice image instead of the default pins
+        }else if ([cdCurCategory isEqualToString:@"6"]) {
+            annotationView.image=[UIImage imageNamed:@"map6-32x39.png"];//here we use a nice image instead of the default pins
+        }else if ([cdCurCategory isEqualToString:@"7"]) {
+            annotationView.image=[UIImage imageNamed:@"map7-32x39.png"];//here we use a nice image instead of the default pins
+        }else if ([cdCurCategory isEqualToString:@"8"]) {
+            annotationView.image=[UIImage imageNamed:@"map8-32x39.png"];//here we use a nice image instead of the default pins
+        }else{
+            annotationView.image=[UIImage imageNamed:@"map1-32x39.png"];//here we use a nice image instead of the default pins
+        }
+        
+        
         
         
         //annotationView.centerOffset = CGPointMake(-8, -4.5);
@@ -1369,4 +1898,255 @@ didUpdateUserLocation:
     
 }
 
+- (IBAction)action_1:(id)sender {
+    
+    cdCurCategory = @"1";
+    [self refreshData:nil];
+    
+}
+
+- (IBAction)action_2:(id)sender {
+    
+    cdCurCategory = @"2";
+    [self refreshData:nil];
+    
+}
+
+- (IBAction)action_3:(id)sender {
+    
+    cdCurCategory = @"3";
+    [self refreshData:nil];
+    
+}
+
+- (IBAction)action_4:(id)sender {
+    
+    cdCurCategory = @"4";
+    [self refreshData:nil];
+    
+}
+
+- (IBAction)action_5:(id)sender {
+    
+    cdCurCategory = @"5";
+    [self refreshData:nil];
+    
+}
+
+- (IBAction)action_6:(id)sender {
+    
+    cdCurCategory = @"6";
+    [self refreshData:nil];
+    
+}
+
+- (IBAction)action_7:(id)sender {
+    
+    cdCurCategory = @"7";
+    [self refreshData:nil];
+    
+}
+
+- (IBAction)action_menu_1:(id)sender {
+    
+    cdCurCategory = @"1";
+    [self action_menu_close:nil];
+    
+    
+    [self.myTableAll reloadData];
+    
+    
+    //GOTO.
+    CGRect frame = self.myScroll.frame;
+    
+    float pageNumberYouWantToGoTo = 0;
+    
+    frame.origin.x = frame.size.width * pageNumberYouWantToGoTo;
+    frame.origin.y = 0;
+    [self.myScroll scrollRectToVisible:frame animated:NO];
+    
+}
+
+- (IBAction)action_menu_2:(id)sender {
+    
+    cdCurCategory = @"2";
+    [self action_menu_close:nil];
+    
+    [self.myTableAll reloadData];
+    
+    
+    //GOTO.
+    CGRect frame = self.myScroll.frame;
+    
+    float pageNumberYouWantToGoTo = 0;
+    
+    frame.origin.x = frame.size.width * pageNumberYouWantToGoTo;
+    frame.origin.y = 0;
+    [self.myScroll scrollRectToVisible:frame animated:NO];
+    
+}
+
+- (IBAction)action_menu_3:(id)sender {
+    
+    cdCurCategory = @"3";
+    [self action_menu_close:nil];
+    
+    [self.myTableAll reloadData];
+    
+    
+    //GOTO.
+    CGRect frame = self.myScroll.frame;
+    
+    float pageNumberYouWantToGoTo = 0;
+    
+    frame.origin.x = frame.size.width * pageNumberYouWantToGoTo;
+    frame.origin.y = 0;
+    [self.myScroll scrollRectToVisible:frame animated:NO];
+    
+}
+
+- (IBAction)action_menu_4:(id)sender {
+    
+    cdCurCategory = @"4";
+    [self action_menu_close:nil];
+    
+    
+    [self.myTableAll reloadData];
+    
+    
+    //GOTO.
+    CGRect frame = self.myScroll.frame;
+    
+    float pageNumberYouWantToGoTo = 0;
+    
+    frame.origin.x = frame.size.width * pageNumberYouWantToGoTo;
+    frame.origin.y = 0;
+    [self.myScroll scrollRectToVisible:frame animated:NO];
+    
+}
+
+- (IBAction)action_menu_5:(id)sender {
+    
+    cdCurCategory = @"5";
+    [self action_menu_close:nil];
+    
+    [self.myTableAll reloadData];
+    
+    
+    //GOTO.
+    CGRect frame = self.myScroll.frame;
+    
+    float pageNumberYouWantToGoTo = 0;
+    
+    frame.origin.x = frame.size.width * pageNumberYouWantToGoTo;
+    frame.origin.y = 0;
+    [self.myScroll scrollRectToVisible:frame animated:NO];
+    
+}
+
+- (IBAction)action_menu_6:(id)sender {
+    
+    cdCurCategory = @"6";
+    [self action_menu_close:nil];
+    
+    [self.myTableAll reloadData];
+    
+    //GOTO.
+    CGRect frame = self.myScroll.frame;
+    
+    float pageNumberYouWantToGoTo = 0;
+    
+    frame.origin.x = frame.size.width * pageNumberYouWantToGoTo;
+    frame.origin.y = 0;
+    [self.myScroll scrollRectToVisible:frame animated:NO];
+    
+}
+
+- (IBAction)action_menu_7:(id)sender {
+    
+    cdCurCategory = @"7";
+    [self action_menu_close:nil];
+    
+    
+    [self.myTableAll reloadData];
+    
+    //GOTO.
+    CGRect frame = self.myScroll.frame;
+    
+    float pageNumberYouWantToGoTo = 0;
+    
+    frame.origin.x = frame.size.width * pageNumberYouWantToGoTo;
+    frame.origin.y = 0;
+    [self.myScroll scrollRectToVisible:frame animated:NO];
+    
+}
+
+- (IBAction)action_menu_8:(id)sender {
+    
+    cdCurCategory = @"8";
+    [self action_menu_close:nil];
+    
+    
+    [self.myTableAll reloadData];
+    
+    
+    //GOTO.
+    CGRect frame = self.myScroll.frame;
+    
+    float pageNumberYouWantToGoTo = 0;
+    
+    frame.origin.x = frame.size.width * pageNumberYouWantToGoTo;
+    frame.origin.y = 0;
+    [self.myScroll scrollRectToVisible:frame animated:NO];
+    
+}
+
+- (IBAction)action_menu_all:(id)sender {
+    
+    cdCurCategory = @"all";
+    [self action_menu_close:nil];
+    
+    [self.myTableAll reloadData];
+    
+    
+    //GOTO.
+    CGRect frame = self.myScroll.frame;
+    
+    float pageNumberYouWantToGoTo = 0;
+    
+    frame.origin.x = frame.size.width * pageNumberYouWantToGoTo;
+    frame.origin.y = 0;
+    [self.myScroll scrollRectToVisible:frame animated:NO];
+    
+}
+
+- (IBAction)action_menu_map:(id)sender {
+    
+    cdCurCategory = @"map";
+    [self action_menu_close:nil];
+    
+    [self.myTableAll reloadData];
+    
+    //GOTO.
+    CGRect frame = self.myScroll.frame;
+    
+    float pageNumberYouWantToGoTo = 1;
+    
+    frame.origin.x = frame.size.width * pageNumberYouWantToGoTo;
+    frame.origin.y = 0;
+    [self.myScroll scrollRectToVisible:frame animated:NO];
+    
+}
+- (IBAction)action_clickBtn:(id)sender {
+    
+    NSString *string = [sender titleForState:UIControlStateDisabled];
+    
+    NSLog(@"action_clickBtn >>> %@", string);
+    
+    DetailViewController *rvController = [self.storyboard instantiateViewControllerWithIdentifier:@"DetailView"];
+    rvController.cdPromoID = [NSString stringWithFormat:@"%@", string];
+    [self.navigationController pushViewController:rvController animated:YES];
+    
+    
+}
 @end

@@ -16,9 +16,25 @@
     
     CLLocation *startLocation;
     
+    NSString * cdPromoID;
+    
     
     
 }
+
+
+- (IBAction)action_menu_1:(id)sender;
+- (IBAction)action_menu_2:(id)sender;
+- (IBAction)action_menu_3:(id)sender;
+- (IBAction)action_menu_4:(id)sender;
+- (IBAction)action_menu_5:(id)sender;
+- (IBAction)action_menu_6:(id)sender;
+- (IBAction)action_menu_7:(id)sender;
+- (IBAction)action_menu_8:(id)sender;
+
+- (IBAction)action_menu_all:(id)sender;
+- (IBAction)action_menu_map:(id)sender;
+
 
 
 @property (strong, nonatomic) IBOutlet UIScrollView *myScroll;
@@ -58,6 +74,17 @@
 
 
 
+
+- (IBAction)action_1:(id)sender;
+- (IBAction)action_2:(id)sender;
+- (IBAction)action_3:(id)sender;
+- (IBAction)action_4:(id)sender;
+- (IBAction)action_5:(id)sender;
+- (IBAction)action_6:(id)sender;
+- (IBAction)action_7:(id)sender;
+
+
+@property(strong, nonatomic) NSString *cdCurCategory;
 
 //@end
 
@@ -112,6 +139,7 @@
 @property (strong, nonatomic) IBOutlet UIView *vw_triggerBg;
 
 
+- (IBAction)action_clickBtn:(id)sender;
 
 
 
